@@ -31,11 +31,11 @@
   - [x] Implement content-based similar product recommendation using vector space similarity.
   - [x] Implement optional metadata filtering (e.g. by category).
 
-- [ ] Create a simple interface supporting:
-  - [ ] Free-text search.
-  - [ ] Phrase search.
-  - [ ] Proximity search.
-  - [ ] Displaying scores and matching positions.
+- [x] Create a simple interface supporting:
+  - [x] Free-text search.
+  - [x] Phrase search.
+  - [x] Proximity search.
+  - [x] Displaying scores and matching positions.
 
 - [ ] Test the system with:
   - [ ] 10 free-text queries.
