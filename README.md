@@ -8,7 +8,7 @@
   - [ ] Convert text to lowercase.
   - [ ] Tokenize text.
   - [ ] Remove punctuation.
-  - [ ] Decide and document the stop-word policy.
+  - [x] Decide and document the stop-word policy.
   - [ ] Apply stemming.
 
 - [ ] Build the inverted index:
@@ -40,6 +40,14 @@
   - [ ] 1 out-of-vocabulary query.
 
 - [ ] Compare ordinary retrieval and positional retrieval using two examples.
+
+## Stop-word policy
+
+The corpus was analysed automatically using the existing corpus loader. The analysis included every document title, category, and description, then converted the text to lowercase and tokenized it with a basic alphabetic-token pattern. NLTK's English stop-word list was compared with the tokens found in the corpus, and each matching word was reviewed before making a decision.
+
+The selected stop words are: `and`, `be`, `can`, `for`, `from`, `in`, `is`, `it`, `on`, `or`, `other`, `t`, `the`, `this`, and `with`. These are ordinary grammatical words or non-meaningful token fragments in this corpus.
+
+`m` and `s` are NLTK stop words but will not be removed. They appear as clothing sizes M and S in product descriptions, so retaining them avoids losing potentially useful product information.
 
 ## README.md info 
 
