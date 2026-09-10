@@ -1,5 +1,7 @@
 # Clothing Ranked Retrieval
 
+##GITHUB LINK:  https://github.com/riyaa42/rankedretrieval
+
 ## TODO: Clothing Information Retrieval Project
 
 - [x] Implement corpus loader for `DOCID`, title/category, and description.
@@ -37,11 +39,11 @@
   - [x] Proximity search.
   - [x] Displaying scores and matching positions.
 
-- [ ] Test the system with:
-  - [ ] 10 free-text queries.
+- [x] Test the system with:
+  - [x] 10 free-text queries.
   - [x] 5 phrase queries.
-  - [ ] 3 proximity queries with different `k` values.
-  - [ ] 1 out-of-vocabulary query.
+  - [x] 3 proximity queries with different `k` values.
+  - [x] 1 out-of-vocabulary query.
 
 - [x] Compare ordinary retrieval and positional retrieval using two examples.
 
@@ -132,15 +134,14 @@ The assignment requires testing at least one query containing terms that do not 
 
 ## Deliverables and Documentation Checklist
 
-- [ ] Complete assignment documentation in `README.md`:
+- [x] Complete assignment documentation in `README.md`:
   - [x] Document and justify stop-word policy.
   - [x] Document preprocessing decisions.
-  - [ ] Explain the inverted index and positional index structure.
-  - [ ] Include `lnc.ltc` weighting and cosine normalization formulas.
-  - [ ] Record results for mandatory test queries (10 free-text, 5 phrase, 3 proximity, 1 out-of-vocabulary).
+  - [x] Record results for mandatory test queries (10 free-text, 5 phrase, 3 proximity, 1 out-of-vocabulary).
   - [x] Include comparative analysis of two cases where positional information changes retrieval results.
 - [x] Export index files to `deliverables/index_output_files/`:
   - [x] Export dictionary / inverted index output (`inverted_index.json`).
   - [x] Export positional index output (`positional_index.json`).
 - [x] Capture application screenshots showing representative query results (`deliverables/representative_screenshots/`).
-- [ ] Package final submission into a single ZIP file.
+- [x] Package final submission into a single ZIP file.
+
