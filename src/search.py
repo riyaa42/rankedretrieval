@@ -2,6 +2,7 @@
 
 from collections import Counter
 import math
+import re
 
 from src.preprocessing import preprocess
 
@@ -39,19 +40,10 @@ def search(query, inverted_index, document_lengths, documents, top_k=10):
     for term in query_weights:
         candidate_docids.update(inverted_index[term]["postings"])
 
-    # Calculate an lnc Euclidean norm only for matching documents. Processed
-    # token counts are kept separately for later use, but are not vector norms.
-    document_norm_squares = {docid: 0.0 for docid in candidate_docids}
-    for entry in inverted_index.values():
-        for docid, frequency in entry["postings"].items():
-            if docid in document_norm_squares:
-                document_weight = 1 + math.log10(frequency)
-                document_norm_squares[docid] += document_weight**2
-
     metadata_by_docid = {document["docid"]: document for document in documents}
     results = []
     for docid in candidate_docids:
-        document_norm = math.sqrt(document_norm_squares[docid])
+        document_norm = document_lengths.get(docid, 0.0)
         if document_norm == 0:
             continue
 
@@ -122,7 +114,7 @@ def phrase_search(phrase, positional_index, documents=None):
     return results
 
 
-def proximity_search(term1, term2, k, positional_index):
+def proximity_search(term1, term2, k, positional_index, documents=None):
     """Return every ordered term pair whose distance is at most ``k`` tokens."""
     if not isinstance(k, int) or isinstance(k, bool) or k <= 0:
         raise ValueError("k must be a positive integer")
@@ -142,6 +134,10 @@ def proximity_search(term1, term2, k, positional_index):
 
     candidate_docids = set(positional_index[processed_term1]["postings"])
     candidate_docids &= set(positional_index[processed_term2]["postings"])
+
+    metadata_by_docid = {}
+    if documents is not None:
+        metadata_by_docid = {document["docid"]: document for document in documents}
 
     results = []
     for docid in sorted(candidate_docids):
@@ -167,13 +163,39 @@ def proximity_search(term1, term2, k, positional_index):
 
                 # Every valid pair is returned so repeated occurrences within
                 # one document remain visible instead of being silently merged.
-                results.append(
-                    {
-                        "docid": docid,
-                        "term1_position": position1,
-                        "term2_position": position2,
-                        "distance": distance,
-                    }
-                )
+                result_item = {
+                    "docid": docid,
+                    "term1_position": position1,
+                    "term2_position": position2,
+                    "distance": distance,
+                }
+                if documents is not None:
+                    document = metadata_by_docid.get(docid, {})
+                    result_item["title"] = document.get("title", "")
+                    result_item["category"] = document.get("category", "")
+                results.append(result_item)
 
     return results
+
+
+def parse_proximity_query(query):
+    """
+    Parse an ordered proximity query string such as 'cotton WITHIN/3 shirt'.
+
+    Returns (term1, term2, k) if the query matches the pattern, or None otherwise.
+    """
+    if not isinstance(query, str):
+        return None
+
+    match = re.match(
+        r"^\s*['\"]?([a-zA-Z0-9_\-]+)['\"]?\s+(?:within\s*/\s*|/\s*)(\d+)\s+['\"]?([a-zA-Z0-9_\-]+)['\"]?\s*$",
+        query.strip(),
+        re.IGNORECASE,
+    )
+    if not match:
+        return None
+
+    term1 = match.group(1)
+    k = int(match.group(2))
+    term2 = match.group(3)
+    return term1, term2, k

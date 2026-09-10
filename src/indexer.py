@@ -1,5 +1,6 @@
 """Basic inverted-index construction for the clothing corpus."""
 
+import math
 from collections import Counter
 
 from src.preprocessing import preprocess
@@ -11,7 +12,7 @@ def _searchable_text(document):
 
 
 def build_inverted_index(documents):
-    """Build an inverted index and processed-token length for each document."""
+    """Build an inverted index and Euclidean document lengths for cosine normalization."""
     inverted_index = {}
     document_lengths = {}
 
@@ -22,10 +23,6 @@ def build_inverted_index(documents):
         # preprocessed in the same way.
         processed_tokens = preprocess(_searchable_text(document))
 
-        # Length is based on processed tokens so it can later be used for
-        # cosine normalization with the same representation as the index.
-        document_lengths[docid] = len(processed_tokens)
-
         # Count each term within this document before adding it to postings.
         # This keeps one posting per document and stores its term frequency.
         term_frequencies = Counter(processed_tokens)
@@ -34,6 +31,13 @@ def build_inverted_index(documents):
                 inverted_index[term] = {"df": 0, "postings": {}}
 
             inverted_index[term]["postings"][docid] = frequency
+
+        # Euclidean length (lnc document norm) for cosine normalization:
+        # sqrt(sum((1 + log10(tf))**2))
+        doc_norm_sq = sum(
+            (1.0 + math.log10(freq)) ** 2 for freq in term_frequencies.values()
+        )
+        document_lengths[docid] = math.sqrt(doc_norm_sq)
 
     for entry in inverted_index.values():
         # Document frequency counts distinct document IDs, not total term uses.
