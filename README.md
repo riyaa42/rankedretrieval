@@ -27,6 +27,10 @@
 
 - [x] Implement ordered proximity search with different `k` values.
 
+- [x] Add novelty backend extension:
+  - [x] Implement content-based similar product recommendation using vector space similarity.
+  - [x] Implement optional metadata filtering (e.g. by category).
+
 - [ ] Create a simple interface supporting:
   - [ ] Free-text search.
   - [ ] Phrase search.
@@ -57,9 +61,24 @@ Preprocessing decisions made aside from normal procedure:
 - Remove apostrophes, so words such as `men's` and `women's` become `mens` and `womens`.
 - Keep alphabetic and numeric tokens because sizes and numeric product details may be useful for retrieval.
 
-## README.md info 
+## Novelty Extension: Product Recommendations and Metadata Filtering
 
-- [ ] Explain preprocessing decisions.
-- [ ] Explain the inverted index and positional index.
-- [ ] Include the `lnc.ltc` formula.
-- [ ] Include sample queries and results.
+An optional backend module was added in `src/recommender.py` to extend the clothing search engine beyond the core requirements:
+
+- Content-based recommendations: Given a target product, it calculates cosine similarity against other products using the existing inverted index and lnc document weights. It returns the top similar items with their titles, categories, and similarity scores, excluding the target item itself. Ties are broken by increasing document ID.
+- Metadata filtering: Filters the corpus documents by attributes such as category before retrieval. It matches values case-insensitively and returns allowed document IDs so the interface or recommender can narrow down results when requested.
+
+## Deliverables and Documentation Checklist
+
+- [ ] Complete assignment documentation in `README.md`:
+  - [x] Document and justify stop-word policy.
+  - [x] Document preprocessing decisions.
+  - [ ] Explain the inverted index and positional index structure.
+  - [ ] Include `lnc.ltc` weighting and cosine normalization formulas.
+  - [ ] Record results for mandatory test queries (10 free-text, 5 phrase, 3 proximity, 1 out-of-vocabulary).
+  - [ ] Include comparative analysis of two cases where positional information changes retrieval results.
+- [ ] Export index files to `deliverables/`:
+  - [ ] Export dictionary / inverted index output.
+  - [ ] Export positional index output.
+- [ ] Capture application screenshots showing representative query results.
+- [ ] Package final submission into a single ZIP file.
