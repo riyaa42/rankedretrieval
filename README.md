@@ -21,9 +21,9 @@
 
 - [x] Return the top 10 documents for each free-text query.
 
-- [ ] Build the positional index with token positions.
+- [x] Build the positional index with token positions.
 
-- [ ] Implement exact phrase search.
+- [x] Implement exact phrase search.
 
 - [ ] Implement ordered proximity search with different `k` values.
 
@@ -35,7 +35,7 @@
 
 - [ ] Test the system with:
   - [ ] 10 free-text queries.
-  - [ ] 5 phrase queries.
+  - [x] 5 phrase queries.
   - [ ] 3 proximity queries with different `k` values.
   - [ ] 1 out-of-vocabulary query.
 
