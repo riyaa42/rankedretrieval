@@ -2,7 +2,7 @@
 
 ## TODO: Clothing Information Retrieval Project
 
-- [ ] Implement corpus loader for `DOCID`, title/category, and description.
+- [x] Implement corpus loader for `DOCID`, title/category, and description.
 
 - [ ] Implement preprocessing:
   - [ ] Convert text to lowercase.
