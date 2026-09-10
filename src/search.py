@@ -120,3 +120,60 @@ def phrase_search(phrase, positional_index, documents=None):
             results.append(result)
 
     return results
+
+
+def proximity_search(term1, term2, k, positional_index):
+    """Return every ordered term pair whose distance is at most ``k`` tokens."""
+    if not isinstance(k, int) or isinstance(k, bool) or k <= 0:
+        raise ValueError("k must be a positive integer")
+
+    term1_tokens = preprocess(term1)
+    term2_tokens = preprocess(term2)
+    if len(term1_tokens) != 1 or len(term2_tokens) != 1:
+        return []
+
+    processed_term1 = term1_tokens[0]
+    processed_term2 = term2_tokens[0]
+    if (
+        processed_term1 not in positional_index
+        or processed_term2 not in positional_index
+    ):
+        return []
+
+    candidate_docids = set(positional_index[processed_term1]["postings"])
+    candidate_docids &= set(positional_index[processed_term2]["postings"])
+
+    results = []
+    for docid in sorted(candidate_docids):
+        term1_positions = positional_index[processed_term1]["postings"][docid][
+            "positions"
+        ]
+        term2_positions = positional_index[processed_term2]["postings"][docid][
+            "positions"
+        ]
+
+        # Ordered matching requires term1 before term2. k is the maximum
+        # number of processed-token positions between the two occurrences.
+        # Stored positions are necessary because co-occurrence alone cannot
+        # prove either order or distance.
+        for position1 in term1_positions:
+            for position2 in term2_positions:
+                if position2 <= position1:
+                    continue
+
+                distance = position2 - position1
+                if distance > k:
+                    break
+
+                # Every valid pair is returned so repeated occurrences within
+                # one document remain visible instead of being silently merged.
+                results.append(
+                    {
+                        "docid": docid,
+                        "term1_position": position1,
+                        "term2_position": position2,
+                        "distance": distance,
+                    }
+                )
+
+    return results
