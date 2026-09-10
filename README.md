@@ -61,14 +61,40 @@ Preprocessing decisions made aside from normal procedure:
 - Remove apostrophes, so words such as `men's` and `women's` become `mens` and `womens`.
 - Keep alphabetic and numeric tokens because sizes and numeric product details may be useful for retrieval.
 
+## Search Interface and Query Modes
+
+The Streamlit user interface provides three distinct search modes according to the assignment requirements:
+
+### 1. Free-Text Ranked Retrieval (VSM lnc.ltc)
+Retrieves the top 10 relevant documents ranked by cosine similarity with document and query weights.
+
+![Free-Text Search Interface](deliverables/representative_screenshots/freetext.png)
+
+### 2. Exact Phrase Search (Positional Index)
+Finds documents where all query terms occur in exact consecutive order, displaying matching phrase start positions.
+
+![Exact Phrase Search Interface](deliverables/representative_screenshots/exactphrase.png)
+
+### 3. Ordered Proximity Search (WITHIN/k)
+Finds documents where the first term occurs before the second term within at most k token positions, displaying matching token pairs and distance.
+
+![Ordered Proximity Search Interface](deliverables/representative_screenshots/proximity.png)
+
 ## Novelty Extension: Product Recommendations and Metadata Filtering
 
 An optional backend module was added in `src/recommender.py` to extend the clothing search engine beyond the core requirements:
 
 - Content-based recommendations: Given a target product, it calculates cosine similarity against other products using the existing inverted index and lnc document weights. It returns the top similar items with their titles, categories, and similarity scores, excluding the target item itself. Ties are broken by increasing document ID.
+
+![Content-Based Product Recommendations](deliverables/representative_screenshots/findsimilarproducts.png)
+
 - Metadata filtering: Filters the corpus documents by attributes such as category before retrieval. It matches values case-insensitively and returns allowed document IDs so the interface or recommender can narrow down results when requested.
 
+![Category Metadata Filtering](deliverables/representative_screenshots/filter.png)
+
 ## Comparative Analysis: Vector Space Model vs. Positional Retrieval
+
+Disclaimer: Browser zoom was minimized while capturing screenshots so all top result cards fit into view without scrolling, so text and interface elements may appear small.
 
 The assignment requires reporting the top-10 results and explaining at least two cases where positional information changes the result set or ordering.
 
@@ -97,6 +123,12 @@ The assignment requires reporting the top-10 results and explaining at least two
 ![Exact Phrase Search: denim stretch](deliverables/representative_screenshots/case2phrase2.png)
 
 - Explanation: Positional retrieval accounts for word order and grammatical structure. In free-text VSM, term permutation has zero effect on ranking, whereas positional indexing distinguishes meaningful phrases from invalid word orders.
+
+### Out-of-Vocabulary Query Handling (Query: `waterproof leather boots`)
+
+The assignment requires testing at least one query containing terms that do not appear in the corpus. Searching `waterproof leather boots` results in 0 documents found because none of the query terms exist in the clothing vocabulary. The application handles this state gracefully without throwing errors or crashing:
+
+![Out-of-Vocabulary Search: waterproof leather boots](deliverables/representative_screenshots/noresults.png)
 
 ## Deliverables and Documentation Checklist
 
