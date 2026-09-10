@@ -4,18 +4,18 @@
 
 - [x] Implement corpus loader for `DOCID`, title/category, and description.
 
-- [ ] Implement preprocessing:
+- [x] Implement preprocessing:
   - [x] Convert text to lowercase.
   - [x] Tokenize text.
   - [x] Remove punctuation.
   - [x] Decide and document the stop-word policy.
   - [x] Apply stemming.
 
-- [ ] Build the inverted index:
-  - [ ] Store term frequency.
-  - [ ] Store document frequency.
+- [x] Build the inverted index:
+  - [x] Store term frequency.
+  - [x] Store document frequency.
 
-- [ ] Store document lengths for cosine normalization.
+- [x] Store document lengths for cosine normalization.
 
 - [ ] Implement `lnc.ltc` cosine-similarity ranking.
 
@@ -59,7 +59,7 @@ Preprocessing decisions made aside from normal procedure:
 
 ## README.md info 
 
-- [ ] Explain preprocessing decisions.
+- [x] Explain preprocessing decisions.
 - [ ] Explain the inverted index and positional index.
 - [ ] Include the `lnc.ltc` formula.
 - [ ] Include sample queries and results.
