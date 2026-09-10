@@ -17,9 +17,9 @@
 
 - [x] Store document lengths for cosine normalization.
 
-- [ ] Implement `lnc.ltc` cosine-similarity ranking.
+- [x] Implement `lnc.ltc` cosine-similarity ranking.
 
-- [ ] Return the top 10 documents for each free-text query.
+- [x] Return the top 10 documents for each free-text query.
 
 - [ ] Build the positional index with token positions.
 
@@ -59,7 +59,7 @@ Preprocessing decisions made aside from normal procedure:
 
 ## README.md info 
 
-- [x] Explain preprocessing decisions.
+- [ ] Explain preprocessing decisions.
 - [ ] Explain the inverted index and positional index.
 - [ ] Include the `lnc.ltc` formula.
 - [ ] Include sample queries and results.
