@@ -43,7 +43,7 @@
   - [ ] 3 proximity queries with different `k` values.
   - [ ] 1 out-of-vocabulary query.
 
-- [ ] Compare ordinary retrieval and positional retrieval using two examples.
+- [x] Compare ordinary retrieval and positional retrieval using two examples.
 
 ## Stop-word policy
 
@@ -68,6 +68,36 @@ An optional backend module was added in `src/recommender.py` to extend the cloth
 - Content-based recommendations: Given a target product, it calculates cosine similarity against other products using the existing inverted index and lnc document weights. It returns the top similar items with their titles, categories, and similarity scores, excluding the target item itself. Ties are broken by increasing document ID.
 - Metadata filtering: Filters the corpus documents by attributes such as category before retrieval. It matches values case-insensitively and returns allowed document IDs so the interface or recommender can narrow down results when requested.
 
+## Comparative Analysis: Vector Space Model vs. Positional Retrieval
+
+The assignment requires reporting the top-10 results and explaining at least two cases where positional information changes the result set or ordering.
+
+### Case 1: Term Proximity and Precision (Query: `cotton t-shirt`)
+
+- Free-Text VSM Search: Entering `cotton t-shirt` retrieves 10 documents based on cosine similarity under the lnc.ltc weighting scheme. The top results include documents such as D011, D071, D031, and D091 (Graphic T-Shirts). In these documents, the token `cotton` appears somewhere in the description (e.g. "poly cotton" or "100% cotton fabric"), but not directly adjacent to `tshirt`.
+
+![Free-Text Search: cotton t-shirt](deliverables/representative_screenshots/case1_1.png)
+
+- Exact Phrase Search: Searching the exact phrase `cotton t-shirt` uses the positional index to enforce that `cotton` is immediately followed by `tshirt` (consecutive token positions). This restricts the results to only 5 documents (D001, D021, D041, D061, D081), each with verified start positions (such as position 15 or 17).
+
+![Exact Phrase Search: cotton t-shirt](deliverables/representative_screenshots/case1_2.png)
+
+- Explanation: Ordinary VSM scores documents using term frequency and inverse document frequency across the entire document text regardless of distance. Positional indexing requires consecutive token offsets, eliminating false positives where the words appear separated in different sentences.
+
+### Case 2: Word Order Sensitivity (Query: `stretch denim` vs. `denim stretch`)
+
+- Free-Text VSM Search: Because the standard Vector Space Model is a bag-of-words model, it treats a query as an unordered collection of term weights. Searching `stretch denim` and searching `denim stretch` produce the exact same query vector. Both queries return the exact same 10 documents in the exact same ranking order with identical cosine scores (D013, D073, D043, D033, D093, D003, D063, D053, D029, D049).
+
+![Free-Text Search: stretch denim](deliverables/representative_screenshots/case2freetext1.png)
+![Free-Text Search: denim stretch](deliverables/representative_screenshots/case2freetext2.png)
+
+- Exact Phrase Search: Using positional indexing, the term order pos1 < pos2 is strictly enforced. Searching `stretch denim` matches 7 documents (D003, D013, D033, D043, D063, D073, D093) where the adjective precedes the noun. Searching the reversed phrase `denim stretch` returns 0 documents because the reverse sequence never occurs in the corpus.
+
+![Exact Phrase Search: stretch denim](deliverables/representative_screenshots/case2phrase1.png)
+![Exact Phrase Search: denim stretch](deliverables/representative_screenshots/case2phrase2.png)
+
+- Explanation: Positional retrieval accounts for word order and grammatical structure. In free-text VSM, term permutation has zero effect on ranking, whereas positional indexing distinguishes meaningful phrases from invalid word orders.
+
 ## Deliverables and Documentation Checklist
 
 - [ ] Complete assignment documentation in `README.md`:
@@ -76,9 +106,9 @@ An optional backend module was added in `src/recommender.py` to extend the cloth
   - [ ] Explain the inverted index and positional index structure.
   - [ ] Include `lnc.ltc` weighting and cosine normalization formulas.
   - [ ] Record results for mandatory test queries (10 free-text, 5 phrase, 3 proximity, 1 out-of-vocabulary).
-  - [ ] Include comparative analysis of two cases where positional information changes retrieval results.
+  - [x] Include comparative analysis of two cases where positional information changes retrieval results.
 - [x] Export index files to `deliverables/index_output_files/`:
   - [x] Export dictionary / inverted index output (`inverted_index.json`).
   - [x] Export positional index output (`positional_index.json`).
-- [ ] Capture application screenshots showing representative query results.
+- [x] Capture application screenshots showing representative query results (`deliverables/representative_screenshots/`).
 - [ ] Package final submission into a single ZIP file.
