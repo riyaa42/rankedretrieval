@@ -25,7 +25,7 @@
 
 - [x] Implement exact phrase search.
 
-- [ ] Implement ordered proximity search with different `k` values.
+- [x] Implement ordered proximity search with different `k` values.
 
 - [ ] Create a simple interface supporting:
   - [ ] Free-text search.
