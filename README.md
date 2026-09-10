@@ -126,7 +126,7 @@ The assignment requires reporting the top-10 results and explaining at least two
 
 ### Out-of-Vocabulary Query Handling (Query: `waterproof leather boots`)
 
-The assignment requires testing at least one query containing terms that do not appear in the corpus. Searching `waterproof leather boots` results in 0 documents found because none of the query terms exist in the clothing vocabulary. The application handles this state gracefully without throwing errors or crashing:
+Demonstration of test of one query containing terms that do not appear in the corpus. Searching `waterproof leather boots` results in 0 documents found because none of the query terms exist in the clothing vocabulary. 
 
 ![Out-of-Vocabulary Search: waterproof leather boots](deliverables/representative_screenshots/noresults.png)
 
