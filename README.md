@@ -1,7 +1,5 @@
 # Clothing Ranked Retrieval
 
-##GITHUB LINK:  https://github.com/riyaa42/rankedretrieval
-
 ## TODO: Clothing Information Retrieval Project
 
 - [x] Implement corpus loader for `DOCID`, title/category, and description.
