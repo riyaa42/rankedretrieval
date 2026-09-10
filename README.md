@@ -77,8 +77,8 @@ An optional backend module was added in `src/recommender.py` to extend the cloth
   - [ ] Include `lnc.ltc` weighting and cosine normalization formulas.
   - [ ] Record results for mandatory test queries (10 free-text, 5 phrase, 3 proximity, 1 out-of-vocabulary).
   - [ ] Include comparative analysis of two cases where positional information changes retrieval results.
-- [ ] Export index files to `deliverables/`:
-  - [ ] Export dictionary / inverted index output.
-  - [ ] Export positional index output.
+- [x] Export index files to `deliverables/index_output_files/`:
+  - [x] Export dictionary / inverted index output (`inverted_index.json`).
+  - [x] Export positional index output (`positional_index.json`).
 - [ ] Capture application screenshots showing representative query results.
 - [ ] Package final submission into a single ZIP file.
