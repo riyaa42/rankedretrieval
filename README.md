@@ -5,11 +5,11 @@
 - [x] Implement corpus loader for `DOCID`, title/category, and description.
 
 - [ ] Implement preprocessing:
-  - [ ] Convert text to lowercase.
-  - [ ] Tokenize text.
-  - [ ] Remove punctuation.
+  - [x] Convert text to lowercase.
+  - [x] Tokenize text.
+  - [x] Remove punctuation.
   - [x] Decide and document the stop-word policy.
-  - [ ] Apply stemming.
+  - [x] Apply stemming.
 
 - [ ] Build the inverted index:
   - [ ] Store term frequency.
@@ -45,9 +45,17 @@
 
 The corpus was analysed automatically using the existing corpus loader. The analysis included every document title, category, and description, then converted the text to lowercase and tokenized it with a basic alphabetic-token pattern. NLTK's English stop-word list was compared with the tokens found in the corpus, and each matching word was reviewed before making a decision.
 
-The selected stop words are: `and`, `be`, `can`, `for`, `from`, `in`, `is`, `it`, `on`, `or`, `other`, `t`, `the`, `this`, and `with`. These are ordinary grammatical words or non-meaningful token fragments in this corpus.
+The selected stop words are: `and`, `be`, `can`, `for`, `from`, `in`, `is`, `it`, `on`, `or`, `other`, `the`, `this`, and `with`. These are ordinary grammatical words in this corpus.
 
-`m` and `s` are NLTK stop words but will not be removed. They appear as clothing sizes M and S in product descriptions, so retaining them avoids losing potentially useful product information.
+`m` and `s` are retained because they appear as clothing sizes. `t` is also retained because it can be part of the product term T-Shirt.
+
+## Preprocessing
+
+Preprocessing decisions made aside from normal procedure:
+
+- Treat `t-shirt`, `t shirt`, and `tshirt` as the same clothing term: `tshirt`.
+- Remove apostrophes, so words such as `men's` and `women's` become `mens` and `womens`.
+- Keep alphabetic and numeric tokens because sizes and numeric product details may be useful for retrieval.
 
 ## README.md info 
 
