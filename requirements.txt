@@ -1,0 +1,3 @@
+streamlit>=1.39
+nltk>=3.9
+pytest>=8.3

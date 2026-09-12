@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Generated assignment artefacts (keep directory placeholders tracked)
+documentation/outputs/inverted_index.json
+documentation/outputs/positional_index.json
+documentation/outputs/document_lengths.json
+documentation/screenshots/*.png
+documentation/screenshots/*.jpg
